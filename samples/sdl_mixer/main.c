@@ -4,7 +4,7 @@
 #include <hal/video.h>
 #include <windows.h>
 
-#define SAMPLE_RATE 22050
+#define SAMPLE_RATE 48000
 
 static void shutdown_audio(Mix_Chunk *chunk, Mix_Music *music)
 {
