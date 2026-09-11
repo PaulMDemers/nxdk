@@ -96,9 +96,17 @@ endif
 DEPS := $(filter %.c.d, $(SRCS:.c=.c.d))
 DEPS += $(filter %.cpp.d, $(SRCS:.cpp=.cpp.d))
 
-$(OUTPUT_DIR)/default.xbe: main.exe $(OUTPUT_DIR) $(CXBE)
+CXBE_ARGS = -OUT:$@ -TITLE:$(XBE_TITLE)
+ifneq ($(XBE_TITLE_ID),)
+CXBE_ARGS += -TITLEID:$(XBE_TITLE_ID)
+endif
+ifneq ($(XBE_LOGO),)
+CXBE_ARGS += -LOGO:$(XBE_LOGO)
+endif
+
+$(OUTPUT_DIR)/default.xbe: main.exe $(OUTPUT_DIR) $(CXBE) $(XBE_LOGO)
 	@echo "[ CXBE     ] $@"
-	$(VE)$(CXBE) -OUT:$@ -TITLE:$(XBE_TITLE) $< $(QUIET)
+	$(VE)$(CXBE) $(CXBE_ARGS) $< $(QUIET)
 
 $(OUTPUT_DIR):
 	@mkdir -p $(OUTPUT_DIR);
